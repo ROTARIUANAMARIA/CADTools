@@ -23,6 +23,11 @@ import org.openstreetmap.josm.tools.Shortcut;
  */
 public class CADToolsAction extends JosmAction {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4134741433851551032L;
+
 	public CADToolsAction(){
         super(tr("CAD Tools"), "images/dialogs/iconita.png",
         tr("Allows the user to make small changes to some selected buildings ."),

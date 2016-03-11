@@ -1,6 +1,5 @@
 package org.openstreetmap.josm.plugins.cadtools;
 
-import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.osm.WaySegment;
 
 public class Point {

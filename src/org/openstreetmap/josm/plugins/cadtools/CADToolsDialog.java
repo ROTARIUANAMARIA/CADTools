@@ -3,31 +3,19 @@
  */
 package org.openstreetmap.josm.plugins.cadtools;
 
-import static org.openstreetmap.josm.tools.I18n.tr;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
 
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.coor.EastNorth;
@@ -40,15 +28,19 @@ import org.openstreetmap.josm.tools.Geometry;
 import java.awt.Font;
 
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
+
 
 
 public class CADToolsDialog extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8881292887908764738L;
 	// the JOptionPane that contains this dialog. required for the closeDialog()
 	// method.
+	@SuppressWarnings("unused")
 	private JOptionPane optionPane;
-	private JCheckBox delete;
-	private JComboBox portCombo;
 	private JTextField textField;
 	private JLabel lblNoOfSegments;
 	private JButton btnDraw;
@@ -67,7 +59,6 @@ public class CADToolsDialog extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
         
-		Icon wallIcon = new ImageIcon("/CADTools/resources/images/symbolicbrickwall.jpg");
 		JButton btnMakeWallStraight = new JButton("Straight wall");
 		btnMakeWallStraight.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		btnMakeWallStraight.addActionListener(new ActionListener() {
@@ -634,7 +625,6 @@ public class CADToolsDialog extends JPanel {
 	private void makeWallStraight() {
 		if (Main.map != null) {
 			Collection<Node> selectedNodes = getDataSet().getSelectedNodes();
-			Collection<Way> ways = getDataSet().getWays();
 			List<Node> toDelete = new ArrayList<>();
 			Way way = new Way();
 
@@ -696,7 +686,6 @@ public class CADToolsDialog extends JPanel {
 	private void editCorners(Way building) {
 		List<Node> currWayNodes = new ArrayList<>();
 		List<Node> currentWayNodes = building.getNodes();
-		List<Node> newNodes = new ArrayList<>();
 		for (int i = 0; i < currentWayNodes.size() - 1; i++) {
 			if (i + 1 >= currentWayNodes.size() - 1) {
 				Double r = Point.distance(
