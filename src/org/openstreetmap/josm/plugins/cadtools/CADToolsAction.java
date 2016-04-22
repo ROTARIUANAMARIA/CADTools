@@ -8,12 +8,15 @@ import static org.openstreetmap.josm.tools.I18n.tr;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
+import org.openstreetmap.josm.plugins.PluginInformation;
 import org.openstreetmap.josm.tools.Shortcut;
 
 
@@ -27,25 +30,35 @@ public class CADToolsAction extends JosmAction {
 	 * 
 	 */
 	private static final long serialVersionUID = 4134741433851551032L;
+	private PluginInformation pluginInformation;
 
 	public CADToolsAction(){
         super(tr("CAD Tools"), "images/dialogs/iconita.png",
         tr("Allows the user to make small changes to some selected buildings ."),
-        Shortcut.registerShortcut("menu:buildingsedittools", tr("Menu: {0}", tr("CAD Tools")),
+        Shortcut.registerShortcut("menu:CADTools", tr("Menu: {0}", tr("CAD Tools")),
         KeyEvent.VK_G, Shortcut.ALT_CTRL), false);
     }
+	
+	public void setPluginInformation(PluginInformation pluginInformation) {
+		this.pluginInformation = pluginInformation;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		CADToolsDialog dialog = new CADToolsDialog();
-		dialog.setSize(new Dimension(700,700));
+		final CADToolsDialog dialog = new CADToolsDialog(pluginInformation.localversion);
+		dialog.setSize(new Dimension(700,750));
         JOptionPane pane = new JOptionPane(dialog, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION);
-        pane.setPreferredSize(new Dimension(450,450));
+        pane.setPreferredSize(new Dimension(450,500));
         JDialog dlg = pane.createDialog(Main.parent, tr("CAD Tools"));
         dialog.setOptionPane(pane);
+        dlg.addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent windowEvent){
+            	dialog.storeConfiguration();
+             }        
+          });
         dlg.setVisible(true);
        
         dlg.dispose();

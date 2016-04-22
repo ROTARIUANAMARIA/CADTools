@@ -15,6 +15,7 @@ public class CADToolsPlugin extends Plugin{
     public CADToolsPlugin(PluginInformation info) {
         super(info);
         exportAction = new CADToolsAction();
+        exportAction.setPluginInformation(info);
         Main.main.menu.toolsMenu.add(exportAction);
         System.out.println(getPluginDir());
     }

@@ -4,8 +4,8 @@ import org.openstreetmap.josm.data.osm.WaySegment;
 
 public class Point {
 	
-	double x;
-	double y;
+	public double x;
+	public double y;
 	
 	public Point(){
 		this.x = 0;
