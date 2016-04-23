@@ -304,7 +304,7 @@ public class Calculation {
 		}
 	}
 
-	public void drawPolygon(String pointsNo) {
+	public void drawCircle(String pointsNo) {
 		Collection<Node> selNodes = getDataSet().getSelectedNodes();
 		Collection<Way> selWays = getDataSet().getSelectedWays();
 		if (selNodes.size() != 3 || selWays.isEmpty() == false)
@@ -355,7 +355,7 @@ public class Calculation {
 	}
 
 
-	public void makeWallStraight() {
+	public void makeWayStraight() {
 		if (Main.map != null) {
 			Collection<Node> selectedNodes = getDataSet().getSelectedNodes();
 			List<Node> toDelete = new ArrayList<>();

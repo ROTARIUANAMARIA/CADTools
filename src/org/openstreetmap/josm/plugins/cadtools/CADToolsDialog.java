@@ -36,7 +36,7 @@ public class CADToolsDialog extends JPanel {
 		addPanelSeparator();
 		add(createOneActionPanel(createIrrPolygonToRegPolygonButton()));
 		addPanelSeparator();
-		add(createOneActionPanel(createStraightWallButton()));
+		add(createOneActionPanel(createStraightWayButton()));
 		addPanelSeparator();
 		add(createCutCornersPanel());
 		addPanelSeparator();
@@ -136,11 +136,11 @@ public class CADToolsDialog extends JPanel {
 		return actionButton;
 	}
 	
-	private JButton createStraightWallButton() {
-		ActionButton actionButton = new ActionButton("Straight wall");
+	private JButton createStraightWayButton() {
+		ActionButton actionButton = new ActionButton("Straight way");
 		actionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				straightWallButtonPressed();
+				straightWayButtonPressed();
 			}
 		});
 		return actionButton;
@@ -150,7 +150,7 @@ public class CADToolsDialog extends JPanel {
 		OneActionPanel panel = new OneActionPanel();
 		panel.setAllSizes(400, 70);
 		panel.setYAxisLayout();
-		panel.add(createFromCircleToPolygonButton());
+		panel.add(createFromPolygonToCircleButton());
 		Dimension rigidAreaDimension = new Dimension(5,5);
 		panel.add(Box.createRigidArea(rigidAreaDimension));
 		OneActionPanel paramPanel = new OneActionPanel();
@@ -165,11 +165,11 @@ public class CADToolsDialog extends JPanel {
 	}
 	
 
-	private JButton createFromCircleToPolygonButton() {
-		ActionButton actionButton = new ActionButton("From circle to polygon");
+	private JButton createFromPolygonToCircleButton() {
+		ActionButton actionButton = new ActionButton("From polygon to circle");
 		actionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				fromCircleToPolygonButtonPressed();
+				fromPolygonToCircleButtonPressed();
 			}
 		});
 		return actionButton;
@@ -179,7 +179,7 @@ public class CADToolsDialog extends JPanel {
 		OneActionPanel panel = new OneActionPanel();
 		panel.setAllSizes(400, 70);
 		panel.setYAxisLayout();
-		panel.add(createFromEllipseToPolygonButton());
+		panel.add(createFromPolygonToEllipseButton());
 		Dimension rigidAreaDimension = new Dimension(5,5);
 		panel.add(Box.createRigidArea(rigidAreaDimension));
 		OneActionPanel paramPanel = new OneActionPanel();
@@ -194,11 +194,11 @@ public class CADToolsDialog extends JPanel {
 	}
 	
 	
-	private JButton createFromEllipseToPolygonButton() {
-		ActionButton actionButton = new ActionButton("From ellipse to polygon");
+	private JButton createFromPolygonToEllipseButton() {
+		ActionButton actionButton = new ActionButton("From polygon to ellipse");
 		actionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				fromEllipseToPolygonButtonPressed();
+				fromPolygonToEllipseButtonPressed();
 			}
 		});
 		return actionButton;
@@ -244,8 +244,8 @@ public class CADToolsDialog extends JPanel {
 		calculation.changePolygon();
 	}
 	
-	private void straightWallButtonPressed() {
-		calculation.makeWallStraight();
+	private void straightWayButtonPressed() {
+		calculation.makeWayStraight();
 	}
 	
 	private void cutCornersButtonPressed() {
@@ -277,13 +277,13 @@ public class CADToolsDialog extends JPanel {
 		calculation.cutCorners(cutCornersType, percent, lenght);
 	}
 	
-	private void fromCircleToPolygonButtonPressed() {
+	private void fromPolygonToCircleButtonPressed() {
 		if (validateInteger(circleSegments.getText(), "Number of segments", Integer.MAX_VALUE)) {
-			calculation.drawPolygon(circleSegments.getText());			
+			calculation.drawCircle(circleSegments.getText());			
 		}
 	}
 
-	private void fromEllipseToPolygonButtonPressed() {
+	private void fromPolygonToEllipseButtonPressed() {
 		if (validateInteger(ellipseSegments.getText(), "Number of segments", Integer.MAX_VALUE)) {
 			calculation.drawEllipse(ellipseSegments.getText());
 		}
