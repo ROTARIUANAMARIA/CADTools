@@ -2,12 +2,17 @@ package org.openstreetmap.josm.plugins.cadtools;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.openstreetmap.josm.data.osm.Node;
+import org.openstreetmap.josm.data.osm.Way;
 
 public class CADToolsDialog extends JPanel {
 	/**
@@ -27,6 +32,7 @@ public class CADToolsDialog extends JPanel {
 	private ParamTextField cutCornersPercent;
 	private ParamTextField cutCornersLength;
 	private ParamTextField cutCornersSegments;
+	private ParamTextField multiplyCircularCopies;
 
 	public CADToolsDialog(String localVersion) {
 		calculation = new Calculation();
@@ -45,6 +51,8 @@ public class CADToolsDialog extends JPanel {
 		add(createFromEllipseToPolygonPanel());
 		addPanelSeparator();
 		add(createOneActionPanel(createMirrorReflectionButton()));
+		addPanelSeparator();
+		add(createMultiplyCircularPanel());
 		addPanelSeparator();
 		add(createVersionPanel(localVersion));
 		restoreConfiguration();
@@ -214,6 +222,34 @@ public class CADToolsDialog extends JPanel {
 		return actionButton;
 	}
 	
+
+	private JPanel createMultiplyCircularPanel() {
+		OneActionPanel panel = new OneActionPanel();
+		panel.setAllSizes(400, 70);
+		panel.setYAxisLayout();
+		panel.add(createMultiplyCircularButton());
+		Dimension rigidAreaDimension = new Dimension(5,5);
+		panel.add(Box.createRigidArea(rigidAreaDimension));
+		OneActionPanel paramPanel = new OneActionPanel();
+		paramPanel.cleanBorder();
+		paramPanel.add(new ParameterLabel("Numer of copies:"));
+		paramPanel.add(Box.createRigidArea(rigidAreaDimension));
+		multiplyCircularCopies = new ParamTextField();
+		multiplyCircularCopies.setAllSizes(30, 20);
+		paramPanel.add(multiplyCircularCopies);
+		panel.add(paramPanel);		
+		return panel;				
+	}
+
+	private JButton createMultiplyCircularButton() {
+		ActionButton actionButton = new ActionButton("Multiply circular");
+		actionButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				MultiplyCircularButtonPressed();
+			}
+		});
+		return actionButton;
+	}
 	
 	private void restoreConfiguration() {
 		cutCornersPercent.setText(configuration.getCutCornersPercent());
@@ -221,6 +257,7 @@ public class CADToolsDialog extends JPanel {
 		cutCornersSegments.setText(configuration.getCurCornersSegments());
 		circleSegments.setText(configuration.getCircleSegments());
 		ellipseSegments.setText(configuration.getEllipseSegments());
+		multiplyCircularCopies.setText(configuration.getMultiplyCircularCopies());
 	}
 	
 	public void storeConfiguration() {
@@ -229,6 +266,7 @@ public class CADToolsDialog extends JPanel {
 		configuration.setCurCornersSegments(cutCornersSegments.getText());
 		configuration.setCircleSegments(circleSegments.getText());
 		configuration.setEllipseSegments(ellipseSegments.getText());
+		configuration.setMultiplyCircularCopies(multiplyCircularCopies.getText());
 	}
 
 	private void addPanelSeparator() {		
@@ -293,6 +331,13 @@ public class CADToolsDialog extends JPanel {
 		calculation.mirrorReflection();
 	}
 
+	private void MultiplyCircularButtonPressed() {
+		if (validateInteger(multiplyCircularCopies.getText(), "Number of copies", Integer.MAX_VALUE)) {
+			calculation.multiplyCircular(Integer.parseInt(multiplyCircularCopies.getText()));			
+		}
+	}
+
+	
 	private boolean validateInteger(String value, String label, int maxValue) {
 		int i;
 		if (value.equals("")) {

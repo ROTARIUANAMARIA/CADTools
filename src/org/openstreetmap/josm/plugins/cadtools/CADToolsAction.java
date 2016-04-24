@@ -51,7 +51,7 @@ public class CADToolsAction extends JosmAction {
 		final CADToolsDialog dialog = new CADToolsDialog(pluginInformation.localversion);
 		dialog.setSize(new Dimension(700,750));
         JOptionPane pane = new JOptionPane(dialog, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION);
-        pane.setPreferredSize(new Dimension(450,500));
+        pane.setPreferredSize(new Dimension(450,600));
         JDialog dlg = pane.createDialog(Main.parent, tr("CAD Tools"));
         dialog.setOptionPane(pane);
         dlg.addWindowListener(new WindowAdapter() {

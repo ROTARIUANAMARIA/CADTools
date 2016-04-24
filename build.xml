@@ -28,7 +28,7 @@
     <property name="plugin.class" value="org.openstreetmap.josm.plugins.cadtools.CADToolsPlugin"/>
     <property name="plugin.description" value="Allows the user to make small changes to some selected buildings . "/>
     <property name="plugin.icon" value="images/dialogs/iconita.png"/>
-    <property name="version.entry.commit.revision" value="1004"/>
+    <property name="version.entry.commit.revision" value="1005"/>
     <property name="plugin.link" value="https://wiki.openstreetmap.org/wiki/JOSM/Plugins/CADTools"/>
     <!--<property name="plugin.early" value="..."/>-->
     <!--<property name="plugin.requires" value="..."/>-->

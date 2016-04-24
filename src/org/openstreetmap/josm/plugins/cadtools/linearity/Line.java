@@ -136,4 +136,13 @@ public class Line {
 		}		
 		return symmetricalPoint;
 	}
+	
+	public double getAngle() {
+		if (isToYAxisParallel == 1) {
+			return Math.PI/2;
+		}
+		else {
+			return Math.atan(a);
+		}
+	}
 }

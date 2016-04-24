@@ -644,4 +644,39 @@ public class Calculation {
 		w.setNodes(newWayNodes);
 	}
 	
+	public void multiplyCircular(int multiplyNumber) {
+		if (Main.map != null) {
+			Collection<Way> ways = new ArrayList<>();
+			Collection<Node> nodes = new ArrayList<Node>();
+			Collection<Node> centerNodes = new ArrayList<Node>();
+			
+			nodes = getDataSet().getSelectedNodes();
+			ways = getDataSet().getSelectedWays();
+			
+			for (Node node : nodes) {
+				boolean nodeBelongsToWay = false;
+				for (Way way : ways) {
+					if (way.containsNode(node)) {
+						nodeBelongsToWay = true;
+						break;
+					}
+				}
+				if (!nodeBelongsToWay) {
+					centerNodes.add(node);
+				}
+			}
+			if (centerNodes.size() != 1) {
+				JOptionPane.showMessageDialog(null, "You should select one point which is the circle center.", "Allert Message", JOptionPane.PLAIN_MESSAGE);
+				return;				
+			}
+			MultiplyCircularCalculation multiplyCircularCalculation = new MultiplyCircularCalculation(multiplyNumber);
+			multiplyCircularCalculation.setCenterNode((Node)centerNodes.toArray()[0]);
+			for (Way w : ways) {
+				multiplyCircularCalculation.setPatern(w);
+				multiplyCircularCalculation.multiplyCircular();
+			}			
+			Main.map.repaint();
+		}
+	}
+	
 }

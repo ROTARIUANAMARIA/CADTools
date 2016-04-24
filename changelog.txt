@@ -1,3 +1,5 @@
+Version 1005:
+- New button "Multiply circular".
 Version 1004:
 - Button label "Straight wall" changed into label "Straight way".
 - Button label "From circle to polygon" changed into label "From polygon to circle".

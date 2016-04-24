@@ -8,6 +8,7 @@ public class Configuration {
 	private String curCornersSegments;
 	private String circleSegments;
 	private String ellipseSegments;
+	private String multiplyCircularCopies;
 	
 	private Configuration() {
 		
@@ -65,6 +66,14 @@ public class Configuration {
 
 	public void setEllipseSegments(String ellipseSegments) {
 		this.ellipseSegments = ellipseSegments;
+	}
+
+	public String getMultiplyCircularCopies() {
+		return multiplyCircularCopies;
+	}
+
+	public void setMultiplyCircularCopies(String multiplyCircularCopies) {
+		this.multiplyCircularCopies = multiplyCircularCopies;
 	}
 	
 	
