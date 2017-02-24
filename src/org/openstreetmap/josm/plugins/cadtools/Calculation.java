@@ -203,7 +203,7 @@ public class Calculation {
     }
     
     private DataSet getDataSet() {
-        return Main.main.getEditLayer().data;
+        return Main.main.getLayerManager().getEditDataSet();
     }
     
     private void drawCirclePoints(int points, double radius, Node center) {

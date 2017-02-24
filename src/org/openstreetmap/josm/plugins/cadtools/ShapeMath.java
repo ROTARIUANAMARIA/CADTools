@@ -251,7 +251,7 @@ public class ShapeMath {
     
     public static void drawCenter() {
 
-        OsmDataLayer currentLayer = Main.main.getEditLayer();
+        OsmDataLayer currentLayer =  Main.getLayerManager().getEditLayer();
         DataSet data = currentLayer.data;
 
         // Collection<Node> nodes = data.getSelectedNodes();
@@ -260,7 +260,7 @@ public class ShapeMath {
         for (Way way : selectedWays) {
             EastNorth center = ShapeMath.getCentroid(way);
             // way.addNode(new Node(center));
-            Main.main.getEditLayer().data.addPrimitive(new Node(center));
+            Main.getLayerManager().getEditLayer().data.addPrimitive(new Node(center));
         }
         Main.map.repaint();
     }

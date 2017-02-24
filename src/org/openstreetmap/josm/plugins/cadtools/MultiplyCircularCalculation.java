@@ -82,7 +82,7 @@ public class MultiplyCircularCalculation {
     }
     
     private DataSet getDataSet() {
-        return Main.main.getEditLayer().data;
+        return Main.getLayerManager().getEditDataSet();
     }
 
     public void multiplyCircular() {
