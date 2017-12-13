@@ -1,3 +1,5 @@
+Version 1007:
+- Some changes due to JOSM API Development.
 Version 1006:
 - Some changes due to JOSM API Development.
 Version 1005:

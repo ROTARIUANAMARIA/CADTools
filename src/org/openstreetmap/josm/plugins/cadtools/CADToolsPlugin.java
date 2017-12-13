@@ -1,6 +1,6 @@
 package org.openstreetmap.josm.plugins.cadtools;
 
-import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.plugins.Plugin;
 import org.openstreetmap.josm.plugins.PluginInformation;
 
@@ -17,6 +17,6 @@ public class CADToolsPlugin extends Plugin{
         super(info);
         CADToolsAction exportAction = new CADToolsAction();
         exportAction.setPluginInformation(info);
-        Main.main.menu.toolsMenu.add(exportAction);
+        MainApplication.getMenu().toolsMenu.add(exportAction);
     }
 }

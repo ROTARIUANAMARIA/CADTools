@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.data.osm.WaySegment;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
 
 public class ShapeMath {
@@ -70,7 +70,7 @@ public class ShapeMath {
         while(it.hasNext()){
             rotate(it.next(), angle, allNodesCenter);
         }
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 
     public static EastNorth getRotation(EastNorth originalPoint, double angle,
@@ -168,7 +168,7 @@ public class ShapeMath {
         while (i.hasNext()) {
             rotate(i.next(), angle, allNodesCenter);
         }
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 
     public static void align(Way firstWay, Way secondWay) {
@@ -184,7 +184,7 @@ public class ShapeMath {
                 - Math.atan2(y4 - y3, x4 - x3);
         System.out.println("Angle calculated from align() " + requiredAngle);
         rotate(secondWay, requiredAngle, getCentroid(secondWay));
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 
     public static void align(WaySegment roadSegment, WaySegment toRotateSegment) {
@@ -205,7 +205,7 @@ public class ShapeMath {
         
         rotate(toRotateSegment.way, requiredAngle,
                 getCentroid(toRotateSegment.way));
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
     
     public static void align(WaySegment roadSegment, Way building){
@@ -227,7 +227,7 @@ public class ShapeMath {
         
         rotate(building, requiredAngle,
                 getCentroid(building));
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
         
     }
     
@@ -251,7 +251,7 @@ public class ShapeMath {
     
     public static void drawCenter() {
 
-        OsmDataLayer currentLayer =  Main.getLayerManager().getEditLayer();
+        OsmDataLayer currentLayer =  MainApplication.getLayerManager().getEditLayer();
         DataSet data = currentLayer.data;
 
         // Collection<Node> nodes = data.getSelectedNodes();
@@ -260,8 +260,8 @@ public class ShapeMath {
         for (Way way : selectedWays) {
             EastNorth center = ShapeMath.getCentroid(way);
             // way.addNode(new Node(center));
-            Main.getLayerManager().getEditLayer().data.addPrimitive(new Node(center));
+            MainApplication.getLayerManager().getEditLayer().data.addPrimitive(new Node(center));
         }
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 }

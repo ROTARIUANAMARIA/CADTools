@@ -8,14 +8,15 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.coor.EastNorth;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.data.osm.WaySegment;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.plugins.cadtools.linearity.Line;
 import org.openstreetmap.josm.tools.Geometry;
+import org.openstreetmap.josm.tools.Logging;
 
 public class Calculation {
     
@@ -46,7 +47,7 @@ public class Calculation {
     
     public WaySegment findSegment(Way closedWay) {
 
-        DataSet data = Main.getLayerManager().getEditLayer().data;
+        DataSet data = MainApplication.getLayerManager().getEditLayer().data;
         int nodeIndex = Integer.MAX_VALUE;
         double min = Double.MAX_VALUE;
         Collection<Way> ways = data.getWays();
@@ -119,14 +120,14 @@ public class Calculation {
                 if (Math.abs(Math.toDegrees(angle)) >= 84 && Math.abs(Math.toDegrees(angle)) <= 96) {
                     if (Math.abs(90 - (Math.abs(Math.toDegrees(angle)))) > epsilon) {
                         if (Math.toDegrees(angle) < 0) {
-                            Main.info("Rotation Angle is :" + (-90 - Math.toDegrees(angle)));
+                        	Logging.info("Rotation Angle is :" + (-90 - Math.toDegrees(angle)));
                             executeRotation(Math.toRadians(-1.0 * (-90 - Math.toDegrees(angle))), new WaySegment(way, (i + 1) - (currentWayNodes.size() - 1)));
                             editedAngles.add(Math.abs(Math.toDegrees(Geometry.getCornerAngle(
                                     currentWayNodes.get(i).getEastNorth(),
                                     currentWayNodes.get((i + 1) - (currentWayNodes.size() - 1)).getEastNorth(),
                                     currentWayNodes.get((i + 2) - (currentWayNodes.size() - 1)).getEastNorth()))));
                         } else {
-                            Main.info("Rotation Angle is :" + (90 - Math.toDegrees(angle)));
+                        	Logging.info("Rotation Angle is :" + (90 - Math.toDegrees(angle)));
                             executeRotation(Math.toRadians(-1.0 * (90 - Math.toDegrees(angle))), new WaySegment(way, (i + 1) - (currentWayNodes.size() - 1)));
                             editedAngles.add(Math.abs(Math.toDegrees(Geometry.getCornerAngle(
                                     currentWayNodes.get(i).getEastNorth(),
@@ -175,11 +176,11 @@ public class Calculation {
         EastNorth eastNorth = new EastNorth(newX, newY);
         segment.getSecondNode().setEastNorth(eastNorth);
 
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
     
     public void changePolygon() {
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Way> selWays = getDataSet().getSelectedWays();
             for (Way w : selWays) {
                 if (w.isClosed()) {
@@ -203,7 +204,7 @@ public class Calculation {
     }
     
     private DataSet getDataSet() {
-        return Main.main.getLayerManager().getEditDataSet();
+        return MainApplication.getLayerManager().getEditDataSet();
     }
     
     private void drawCirclePoints(int points, double radius, Node center) {
@@ -219,7 +220,7 @@ public class Calculation {
         }
         polygon.addNode(polygon.getNodes().get(0));
         getDataSet().addPrimitive(polygon);
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
     
     public void drawEllipse(String pointsNo) {
@@ -261,7 +262,7 @@ public class Calculation {
                 }
                 for (Node n : selNodes)
                     getDataSet().removePrimitive(n);
-                Main.map.repaint();
+                MainApplication.getMap().repaint();
                 
             } else {
                 JOptionPane.showMessageDialog(null,
@@ -281,7 +282,7 @@ public class Calculation {
                     }
                 }
             }
-            Main.map.repaint();
+            MainApplication.getMap().repaint();
         }
     }
 
@@ -314,7 +315,7 @@ public class Calculation {
                 drawCirclePoints(Integer.parseInt(pointsNo), radius, new Node(new EastNorth(centerX, centerY)));
                 for (Node n : selNodes)
                     getDataSet().removePrimitive(n);
-                Main.map.repaint();
+                MainApplication.getMap().repaint();
             }
         }
     }
@@ -332,11 +333,11 @@ public class Calculation {
         }
         ellipse.addNode(ellipse.getNodes().get(0));
         getDataSet().addPrimitive(ellipse);
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 
     public void makeWayStraight() {
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Node> selectedNodes = getDataSet().getSelectedNodes();
             List<Node> toDelete = new ArrayList<>();
             Way way = new Way();
@@ -379,12 +380,12 @@ public class Calculation {
                 getDataSet().removePrimitive(nd);
             }
 
-            Main.map.repaint();
+            MainApplication.getMap().repaint();
         }
     }
 
     public void cutCorners(CutCornersType type, int percent, int length) {
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Way> ways = new ArrayList<>();
             ways = getDataSet().getSelectedWays();
             for (Way w : ways)
@@ -396,7 +397,7 @@ public class Calculation {
     public int countMinDistanceBetweenCornersOfAllWays() {
         int distance = Integer.MAX_VALUE;
         int d;
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Way> ways = new ArrayList<>();
             ways = getDataSet().getSelectedWays();
             for (Way w : ways) {
@@ -472,7 +473,7 @@ public class Calculation {
 
                 Node newNode1 = getIntersectionNode(currentWayNodes.get((i + 1) - (currentWayNodes.size() - 1)), currentWayNodes.get(i),
                         currentWayNodes.get((i + 1) - (currentWayNodes.size() - 1)), getRadius(r, type, percent, length));
-                System.out.println(getRadius(r, type, percent, length)+" "+ Main.map.mapView.getScale());
+                System.out.println(getRadius(r, type, percent, length)+" "+ MainApplication.getMap().mapView.getScale());
                 getDataSet().addPrimitive(newNode1);
                 currWayNodes.add(newNode1);
 
@@ -507,7 +508,7 @@ public class Calculation {
         }
 
         building.setNodes(currWayNodes);
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
 
     private Node getIntersectionNode(Node center, Node firstPoint, Node secondPoint, double radius) {
@@ -557,8 +558,8 @@ public class Calculation {
     }
 
     public void buildingsAlignment() {
-        if (Main.map != null) {
-            DataSet data = Main.getLayerManager().getEditLayer().data;
+        if (MainApplication.getMap() != null) {
+            DataSet data = MainApplication.getLayerManager().getEditLayer().data;
             Collection<Way> ways = data.getSelectedWays();
             generalization(ways);
             for (Way way : ways) {
@@ -585,14 +586,14 @@ public class Calculation {
     }
     
     public void mirrorReflection() {
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Way> ways = new ArrayList<>();
             ways = getDataSet().getSelectedWays();
             for (Way w : ways)
                 if (!w.isClosed() && w.getNodesCount() > 2)
                     mirrorReflection(w);
         }    
-        Main.map.repaint();
+        MainApplication.getMap().repaint();
     }
     
     private void mirrorReflection(Way w) {
@@ -616,7 +617,7 @@ public class Calculation {
     }
     
     public void multiplyCircular(int multiplyNumber) {
-        if (Main.map != null) {
+        if (MainApplication.getMap() != null) {
             Collection<Way> ways = new ArrayList<>();
             Collection<Node> nodes = new ArrayList<Node>();
             Collection<Node> centerNodes = new ArrayList<Node>();
@@ -646,7 +647,7 @@ public class Calculation {
                 multiplyCircularCalculation.setPatern(w);
                 multiplyCircularCalculation.multiplyCircular();
             }            
-            Main.map.repaint();
+            MainApplication.getMap().repaint();
         }
     }
 }
