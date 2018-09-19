@@ -1,3 +1,5 @@
+Version 1008:
+- Main.parent replaced with MainApplication.getMainFrame() (introduced in JOSM 14140).
 Version 1007:
 - Some changes due to JOSM API Development.
 Version 1006:

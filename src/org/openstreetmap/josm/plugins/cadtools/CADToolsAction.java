@@ -14,8 +14,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.plugins.PluginInformation;
 import org.openstreetmap.josm.tools.Shortcut;
 
@@ -49,7 +49,7 @@ public class CADToolsAction extends JosmAction {
         dialog.setSize(new Dimension(700, 750));
         JOptionPane pane = new JOptionPane(dialog, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION);
         pane.setPreferredSize(new Dimension(450, 600));
-        JDialog dlg = pane.createDialog(Main.parent, tr("CAD Tools"));
+        JDialog dlg = pane.createDialog(MainApplication.getMainFrame(), tr("CAD Tools"));
         dialog.setOptionPane(pane);
         dlg.addWindowListener(new WindowAdapter() {
             @Override
