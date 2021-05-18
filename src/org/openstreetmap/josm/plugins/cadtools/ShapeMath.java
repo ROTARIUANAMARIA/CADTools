@@ -203,8 +203,8 @@ public class ShapeMath {
         
         requiredAngle = normalise(requiredAngle);
         
-        rotate(toRotateSegment.way, requiredAngle,
-                getCentroid(toRotateSegment.way));
+        rotate(toRotateSegment.getWay(), requiredAngle,
+                getCentroid(toRotateSegment.getWay()));
         MainApplication.getMap().repaint();
     }
     
