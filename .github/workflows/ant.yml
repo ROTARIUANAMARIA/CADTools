@@ -11,14 +11,19 @@ on:
       - master
       - $default-branch
   schedule:
-  - cron: "20 23 * * 3"
+  - cron: "23 21 * * 2"
   workflow_dispatch:
 
 jobs:
   call-workflow:
     strategy:
       matrix:
-        josm-revision: ["", "r18723"]
-    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v1
+        josm-revision: ["", "r17896"]
+    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v2
     with:
       josm-revision: ${{ matrix.josm-revision }}
+      perform-revision-tagging: ${{ github.repository == 'ROTARIUANAMARIA/CADTools' && github.ref_type == 'branch' && github.ref_name == 'master' && github.event_name != 'schedule' && github.event_name != 'pull_request' && matrix.josm-revision == 'r17896' }}
+    secrets: inherit
+    permissions:
+      contents: write
+      deployments: write
